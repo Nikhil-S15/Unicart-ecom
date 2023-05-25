@@ -30,10 +30,10 @@ router.post("/signup", userControllers.postSignup);
 router.put('/change-product-quantity',checkProductQtyCart,cartController.updateQuantity)
 
 // get shop page
-router.get('/shop',userControllers.getShop)
+router.get('/shop',auth.userAuth,userControllers.getShop)
 
 // get product details
-router.get('/product-detail',userControllers.getProductDetail)
+router.get('/product-detail',auth.userAuth,userControllers.getProductDetail)
 
 // get cart
 router.get('/cart-list',auth.userAuth,cartController.getCart)

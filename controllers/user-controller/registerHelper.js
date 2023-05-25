@@ -62,7 +62,7 @@ module.exports = {
 
   // get otp
   otpLogin: (req,res)=>{
-    res.render('user/otpLogin',{layout:'Layout'})
+    res.render('user/otpLogin',{layout:'layout'})
     req.session.otpLoginError=false;
 },  
 
