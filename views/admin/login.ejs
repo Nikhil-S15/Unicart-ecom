@@ -1,0 +1,67 @@
+<div class="container">
+    <section class="content-main mt-80 mb-80">
+      <div class="card mx-auto card-login">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Admin Login</h4>
+          <p id="error" class="text-danger"></p>
+          <form action="/admin"class="p-10 " method="post">
+            <div class="mb-3">
+              <input class="form-control" name="email" id="email" placeholder="Email" type="text">
+              <p id="error1" class="text-danger"></p>
+            </div>
+            <div class="mb-3">
+              <input class="form-control" name="password" id="password" placeholder="Password" type="password">
+              <p id="error1" class="text-danger"></p>
+            </div> 
+            <div class="mb-3">
+              
+              <label class="form-check">
+                <input type="checkbox" class="form-check-input" checked="">
+                <span class="form-check-label">Remember</span>
+              </label>
+            </div>
+            <div class="mb-4">
+              <button type="submit" class="btn btn-primary w-100"> Login </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+
+function validate(){
+ 
+const email = document.getElementById('email')
+const password = document.getElementById('password')
+
+const emailValue = email.value.trim()
+const passwordValue = password.value.trim()
+
+let error1 = email.parentElement.querySelector('p')
+let error2 = password.parentElement.querySelector('p')
+
+error1.innerText = ''
+error2.innerText = ''
+
+let flag = 1
+if(emailValue == '')
+{
+    error1.innerText = 'Field is required'
+}
+if(passwordValue == '')
+{
+    error2.innerText = 'Field is required'
+}
+
+if(flag == 1)
+{
+    submit (emailValue, passwordValue)
+}
+
+}
+
+
+
+  </script>

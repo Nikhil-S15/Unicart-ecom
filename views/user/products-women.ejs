@@ -1,0 +1,96 @@
+
+<div class="dropdown mr-10"  >
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"   aria-expanded="false">
+    ALL PRODUCTS
+  </button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="/products-men">MEN</a></li>
+    <li><a class="dropdown-item" href="/products-women">WOMEN</a></li>
+  
+  </ul>
+  <section class="mt-50 mb-50">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="row product-grid-3">
+            <% product.forEach(function(item) { %>
+            <div class="col-lg-3 col-md-4">
+            
+                
+                
+              <div class="product-cart-wrap mb-30">
+                <div class="product-img-action-wrap">
+                  <div class="product-img product-img-zoom">
+            
+                    <a href="/product-detail?id=<%= item._id%>">
+                      <img class="default-img" src="/uploads/<%= item.img[0]%>" alt="">
+                      <!-- <img class="hover-img" src="assets/imgs/shop/product-2-2.jpg" alt=""> -->
+                    </a>
+                  </div>
+                  <div class="product-action-1">
+                    <a aria-label="Quick view" class="action-btn hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal">
+                      <i class="fi-rs-search"></i></a>
+                    <a aria-label="Add To Wishlist" class="action-btn hover-up" href="#"><i class="fi-rs-heart"></i></a>
+                    <a aria-label="Compare" class="action-btn hover-up" href="#"><i class="fi-rs-shuffle"></i></a>
+                  </div>
+                  <!-- <div class="product-badges product-badges-position product-badges-mrg">
+                    <span class="hot">Hot</span>
+                  </div> -->
+                </div>
+                <div class="product-content-wrap">
+                  <!-- <div class="product-category">
+                    <a href="shop-grid-right.html">Music</a>
+                  </div> -->
+                  <h2><a href="#"><%= item.name %></a></h2>
+                  <div class="rating-result" title="90%">
+                    <!-- <span>
+                      <span>90%</span>
+                    </span> -->
+                  </div>
+                  <div class="product-price">
+                    <span>₹<%= item.price %> </span>
+                    <!-- <span class="old-price">$245.8</span> -->
+                  </div>
+                  <div class="product-action-1 show">
+                    <button aria-label="Add To Cart" class="action-btn hover-up" onclick="addtocart('<%= item._id%>')" ><i class="fi-rs-shopping-bag-add"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% }); %>
+  
+            <!--pagination-->
+            <div class="pagination-area mt-15 mb-sm-5 mb-lg-0">
+              <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-start">
+                  <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                  <li class="page-item"><a class="page-link" href="#">02</a></li>
+                  <li class="page-item"><a class="page-link" href="#">03</a></li>
+                  <li class="page-item"><a class="page-link dot" href="#">...</a></li>
+                  <li class="page-item"><a class="page-link" href="#">16</a></li>
+                  <li class="page-item"><a class="page-link" href="#"><i class="fi-rs-angle-double-small-right"></i></a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <script>
+    function addtocart (proId) {
+      $.ajax({
+        url:'/add-to-cart/'+proId,
+        method:'GET',
+      
+        success:(response)=>{
+          Swal.fire({
+            title: 'Added To Cart',
+            text: 'Your Product has been added to Cart',
+            icon: 'success',
+            timer: 5000
+          })
+        }
+      })
+    }
+  </script>

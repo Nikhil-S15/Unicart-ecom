@@ -1,0 +1,61 @@
+<section class="">
+    <div class="container d-flex justify-content-center">
+      <div class="row w-75 mt-5">
+        <div class="col-md-12">
+          <h2 class="text-center">Edit Banner</h2>
+          <div class="table-responsive">
+            <table class="table table-hover" id="productsTable">
+          <form action="/admin/edit_banner?editbanner=<%=response._id%>" method="POST" enctype="multipart/form-data">
+            <label for="">Title</label>
+            <input type="text" name="title" class="form-control" value="<%=response.title%>" />
+            <label for="">Description</label>
+            <input type="text" name="description" class="form-control" value="<%=response.description%>" />
+            <label for="">Link</label>
+            <input type="text" name="link" class="form-control" value="<%=response.link%>" />
+            <label for="">Image</label>
+          <img src="/uploads/<%=response?.image%>" alt="" style="width:100px;height:auto ">
+            <input type="file" name="image1" class="form-control" />
+            <button type="submit" class="btn btn-info text-white mt-4">Submit</button>
+          </form>
+        </table>
+      </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script> -->
+
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+<script>
+    $(document).ready( function () {
+      $('#productsTable').DataTable();
+  } );
+</script>
+
+  <style>
+
+    body {
+      font-family: Arial, sans-serif;
+    }
+    
+    h1 {
+      text-align: center;
+    }
+    
+    form {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    
+    
+    </style>

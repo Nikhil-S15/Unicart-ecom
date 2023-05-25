@@ -1,0 +1,147 @@
+
+
+<div class="card mb-4">
+  <!-- card-header end -->
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-hover" id="productsTable">
+       
+        <form
+        action="/admin/add_banner"
+        method="post"
+        enctype="multipart/form-data"
+        id="myform"
+      >
+        <label for="">Title</label>
+        <input
+          type="text"
+          name="title"
+          class="form-control"
+          id="title"
+          onkeyup="titleValidation()"
+        />
+        <span id="title-error" class="validation-label"></span>
+        <br />
+
+        <label for="">Description</label>
+        <input
+          type="text"
+          name="description"
+          class="form-control"
+          id="description"
+          onkeyup="descriptionValidation()"
+        />
+        <span id="description-error" class="validation-label"></span>
+        <br />
+
+        <label for="">Image</label>
+        <input type="file" name="image" class="form-control" required />
+        <button
+          type="submit"
+          class="btn btn-info text-white text-center mt-4"
+        >
+          Submit
+        </button>
+      </form>
+         
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+<script>
+    $(document).ready( function () {
+      $('#productsTable').DataTable();
+  } );
+</script>
+
+<script>
+  let regex = /^[^ ].*/;
+
+  let description = document.getElementById("description");
+  let link = document.getElementById("link");
+
+  let titleError = document.getElementById("title-error");
+  let descriptionError = document.getElementById("description-error");
+  let linkError = document.getElementById("link-error");
+
+  let myform = document.getElementById("myform");
+
+  function titleValidation() {
+    let name = document.getElementById("title").value;
+    let nameInput = document.getElementById("title");
+    if (name.length == 0) {
+      titleError.innerHTML = "Title is required";
+      titleError.style.color = "red";
+      nameInput.style.border = "solid 2px red";
+      return false;
+    }
+    if (!name.match(regex)) {
+      titleError.innerHTML = "Write valid Title";
+      titleError.style.color = "red";
+      nameInput.style.border = "solid 2px red";
+      return false;
+    }
+    titleError.innerHTML = "";
+    titleError.style.color = "green";
+    nameInput.style.border = "solid 2px green";
+    return true;
+  }
+
+  function descriptionValidation() {
+    let name = document.getElementById("description").value;
+    let nameInput = document.getElementById("description");
+    if (name.length == 0) {
+      descriptionError.innerHTML = "Description is required";
+      descriptionError.style.color = "red";
+      nameInput.style.border = "solid 2px red";
+      return false;
+    }
+    if (!name.match(regex)) {
+      descriptionError.innerHTML = "Write valid Description";
+      descriptionError.style.color = "red";
+      nameInput.style.border = "solid 2px red";
+      return false;
+    }
+    descriptionError.innerHTML = "";
+    descriptionError.style.color = "green";
+    nameInput.style.border = "solid 2px green";
+    return true;
+  }
+
+  myform.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (!titleValidation() || !descriptionValidation()) {
+      return false;
+    } else {
+      myform.submit();
+    }
+  });
+</script>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+</style>
