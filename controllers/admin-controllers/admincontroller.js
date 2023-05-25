@@ -355,7 +355,8 @@ removeSubCategory:(req,res)=>{
   getProductList: (req, res) => {
     adminHelper.getProductList().then((product) => {
       // console.log(Product);
-      res.render("admin/productlist", { layout: "admin-layout", product });
+      let layout = 'admin-layout'
+      res.render("admin/listProduct", { layout, product });
     });
   },
 
