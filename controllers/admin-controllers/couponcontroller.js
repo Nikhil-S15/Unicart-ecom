@@ -8,7 +8,7 @@ module.exports = {
     {
         let admin = req.session.admin
         
-        res.render("admin/addcoupon",{layout:'admin-layout' , admin})
+        res.render("admin/addCoupon",{layout:'admin-layout' , admin})
     },
 
     // generate coupon
