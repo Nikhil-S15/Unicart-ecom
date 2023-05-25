@@ -7,7 +7,7 @@ module.exports = {
     getAddCoupon:(req,res)=>
     {
         let admin = req.session.admin
-        console.log("killll");
+        
         res.render("admin/addcoupon",{layout:'admin-layout' , admin})
     },
 
