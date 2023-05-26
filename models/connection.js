@@ -70,6 +70,7 @@ discountedPrice: {
   img: {
     type: Array,
   },
+  count: Number,
 });
 
 const categorySchema = new mongoose.Schema({

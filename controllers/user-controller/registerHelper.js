@@ -182,4 +182,7 @@ applyCoupon: async (req, res) => {
     req.session.status = false;
     res.redirect("/");
   },
+
+    
+  
 };
