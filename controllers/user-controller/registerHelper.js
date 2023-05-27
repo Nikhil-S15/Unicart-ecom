@@ -4,6 +4,7 @@ const cartHelpers = require('../../helpers/carthelper/cartHelper')
 const userHelper = require("../../helpers/userhelper/userhelper");
 const  couponHelpers = require("../../helpers/adminhelper/couponhelper")
 const orderHelpers = require("../../helpers/carthelper/orderHelper")
+const productModel = require('../../models/connection')
 const dbs = require("../../models/connection")
 
 
@@ -87,16 +88,78 @@ var phone = Number(req.body.phonenumber)
 
 
 // get shop page
-  getShop: async (req, res) => {
-    let user = req.session.user;
-    console.log("kill them");
+  // getShop: async (req, res) => {
+  //   let user = req.session.user;
+  //   console.log("kill them");
 
-    let product = await userHelper.getShop()
-    let category = await dbs.Category.find()
-      console.log(product);
-      res.render("user/shop", { user, product ,category});
+  //   let product = await userHelper.getShop()
+  //   let category = await dbs.Category.find()
+  //     console.log(product);
+  //     res.render("user/shop", { user, product ,category});
   
+  // },
+  getShop: async (req, res) => {
+    try {
+      let user = req.session.user;
+      let count = await cartHelpers.getCartCount(user._id);
+  
+      const page = parseInt(req.query?.page) || 1;
+      const perPage = 6;
+  
+      if (req.query?.search) {
+        const { product, currentPage, totalPages, noProductFound } = await userHelper.getQueriesOnShop({
+          search: req.query.search,
+          page
+        });
+  
+        if (noProductFound) {
+          req.session.noProductFound = noProductFound;
+          res.render('user/shop', {
+            layout: 'Layout',
+            product: [],
+            user,
+            count,
+            currentPage,
+            totalPages,
+            productResult: req.session.noProductFound
+          });
+        } else {
+          req.session.selectedProducts = product;
+          res.render('user/shop', {
+            layout: 'Layout',
+            product,
+            user,
+            count,
+            currentPage,
+            totalPages,
+            productResult: req.session.noProductFound
+          });
+        }
+      } else {
+        let currentPage = 1;
+        const { product, totalPages } = await userHelper.getAllProducts(page, perPage);
+  
+        if (product.length !== 0) {
+          req.session.noProductFound = false;
+        }
+  
+        res.render('user/shop', {
+          layout: 'Layout',
+          product,
+          user,
+          count,
+          totalPages,
+          currentPage,
+          productResult: req.session.noProductFound
+        });
+  
+        req.session.noProductFound = false;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   },
+  
 
    // get prdoct details
    getProductDetail: async (req,res)=>
@@ -173,7 +236,6 @@ applyCoupon: async (req, res) => {
       res.send(response)
   })
 },
-
 
 
 

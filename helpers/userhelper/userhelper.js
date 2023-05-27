@@ -1,5 +1,6 @@
 const DB = require("../../models/connection");
 const bcrypt = require("bcrypt");
+const productModel = require("../../models/connection")
 const { name } = require("ejs");
 const { user } = require("../../models/connection");
 const { response } = require("../../app");
@@ -199,6 +200,63 @@ getAllProductsWomen:()=>
   } catch (error) {
     console.log(error.message);
   }
+},
+
+getAllProducts: async (page, perPage) => {
+  const skip = (page - 1) * perPage;
+  const product = await productModel.Product.find()
+      .skip(skip)
+      .limit(perPage);
+
+  const totalProducts = await productModel.Product.countDocuments();
+  const totalPages = Math.ceil(totalProducts / perPage);
+
+  return {
+      product,
+      totalPages,
+  };
+},
+getQueriesOnShop: (query) => {
+  const search = query?.search;
+  const page = parseInt(query?.page) || 1;
+  const perPage = 10;
+
+  return new Promise(async (resolve, reject) => {
+    // Building search query
+    let searchQuery = {};
+
+    if (search) {
+      searchQuery = {
+        $or: [
+          { name: { $regex: search, $options: 'i' } },
+          { description: { $regex: search, $options: 'i' } }
+        ]
+      };
+    }
+
+    const skip = (page - 1) * perPage;
+    const product = await productModel.Product.find(searchQuery)
+      .skip(skip)
+      .limit(perPage);
+
+    const totalProducts = await productModel.Product.countDocuments(searchQuery);
+    const totalPages = Math.ceil(totalProducts / perPage);
+
+    if (product.length === 0) {
+      resolve({
+        noProductFound: true,
+        Message: 'No results found.'
+      });
+    }
+
+    resolve({
+      product,
+      noProductFound: false,
+      currentPage: page,
+      totalPages
+    });
+  });
 }
+
   
 };

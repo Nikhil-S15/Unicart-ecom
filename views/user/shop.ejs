@@ -8,11 +8,17 @@
     <li><a class="dropdown-item" href="/products-women">WOMEN</a></li>
   
   </ul>
+  <div class="col-md-6">
+    <div class="input-group">
+      <span class="d-inline-block text-dark align-middle mt-10 mr-10"></span>
+      <input type="text" class="form-control form-control-lg border-0 bg-transparent text-dark" name="search" id="search" placeholder="Search here...">
+      <button type="button" class="btn btn-sm btn-dark ml-100" onclick="userQuery(1,event)">Search</button>
+    </div>
+  </div>
 </div>
 <section class="mt-50 mb-50">
   
     <div class="container">
-      
       <div class="row">
         <div class="col-lg-12">
           <div class="row product-grid-3">
@@ -63,12 +69,28 @@
             <div class="pagination-area mt-15 mb-sm-5 mb-lg-0">
               <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-start">
-                  <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                  <li class="page-item"><a class="page-link" href="#">02</a></li>
-                  <li class="page-item"><a class="page-link" href="#">03</a></li>
-                  <li class="page-item"><a class="page-link dot" href="#">...</a></li>
-                  <li class="page-item"><a class="page-link" href="#">16</a></li>
-                  <li class="page-item"><a class="page-link" href="#"><i class="fi-rs-angle-double-small-right"></i></a></li>
+                  <% if (currentPage > 1) { %>
+                  <li class="page-item"><a class="page-link" href="?page=<%= currentPage - 1 %>"><i class="fi-rs-angle-double-small-left"></i></a></li>
+                  <% } else { %>
+                  <li class="page-item disabled"><span class="page-link"><i class="fi-rs-angle-double-small-left"></i></span></li>
+                  <% } %>
+  
+                  <!-- Page Numbers -->
+                  <!-- Page Numbers -->
+                  <% for (let page = 1; page <= totalPages; page++) { %>
+                  <% if (page === currentPage) { %>
+                  <li class="page-item active" id="current-page-<%= page %>"><span class="page-link"><%= page %></span></li>
+                  <% } else { %>
+                  <li class="page-item " id="current-page-<%= page %>"><a class="page-link" href="?page=<%= page %>" data-page="<%= page %>"><%= page %></a></li>
+                  <% } %>
+                  <% } %>
+  
+  
+                  <% if (currentPage < totalPages) { %>
+                  <li class="page-item"><a class="page-link" href="?page=<%= currentPage + 1 %>"><i class="fi-rs-angle-double-small-right"></i></a></li>
+                  <% } else { %>
+                  <li class="page-item disabled"><span class="page-link"><i class="fi-rs-angle-double-small-right"></i></span></li>
+                  <% } %>
                 </ul>
               </nav>
             </div>
@@ -141,5 +163,51 @@
       }
     })
   }
+
+  function userQuery(pageNumber = 1) {
+  event.preventDefault();
+  $.ajax({
+    url: '/shop',
+    method: 'GET',
+    data: $('#formId').serialize() + '&page=' + pageNumber,
+    success: function(response) {
+      if (response) {
+        var $response = $(response);
+        var $newProductGrid = $response.find('.product-grid-3');
+
+        $('.product-grid-3').replaceWith($newProductGrid);
+        let element = document.getElementById(`current-page-${pageNumber}`);
+        $('#current-page-1').removeClass('active');
+        $(`#current-page-${pageNumber}`).addClass('active');
+        const status = document.getElementById('search-status').value;
+        if (status == 'true') {
+          Swal.fire({
+            icon: 'info',
+            title: 'Info',
+            text: 'Searched Products do not exist, Sorry!!',
+            timer: 3000
+          }).then(() => {
+            location.reload();
+          });
+        }
+      }
+    },
+    error: function(error) {
+      console.log(error);
+    }
+  });
+}
+
+$(document).on('click', '.pagination .page-link', function(e) {
+  e.preventDefault();
+  let pageNumber = $(this).data('page');
+  userQuery(pageNumber);
+});
+
+$(document).on('click', '#searchBtn', function(e) {
+  e.preventDefault();
+  userQuery();
+});
+
   </script>
 
