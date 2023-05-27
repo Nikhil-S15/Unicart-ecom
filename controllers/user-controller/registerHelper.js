@@ -4,7 +4,6 @@ const cartHelpers = require('../../helpers/carthelper/cartHelper')
 const userHelper = require("../../helpers/userhelper/userhelper");
 const  couponHelpers = require("../../helpers/adminhelper/couponhelper")
 const orderHelpers = require("../../helpers/carthelper/orderHelper")
-const productModel = require('../../models/connection')
 const dbs = require("../../models/connection")
 
 
@@ -98,8 +97,6 @@ var phone = Number(req.body.phonenumber)
       res.render("user/shop", { user, product ,category});
   
   },
- 
-  
 
    // get prdoct details
    getProductDetail: async (req,res)=>
@@ -176,6 +173,7 @@ applyCoupon: async (req, res) => {
       res.send(response)
   })
 },
+
 
 
 

@@ -1,6 +1,5 @@
 const DB = require("../../models/connection");
 const bcrypt = require("bcrypt");
-const productModel = require("../../models/connection")
 const { name } = require("ejs");
 const { user } = require("../../models/connection");
 const { response } = require("../../app");
@@ -200,9 +199,6 @@ getAllProductsWomen:()=>
   } catch (error) {
     console.log(error.message);
   }
-},
-
-
-
+}
   
 };
