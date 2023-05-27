@@ -9,12 +9,7 @@
   
   </ul>
   <div class="col-md-6">
-    <div class="input-group">
-      <span class="d-inline-block text-dark align-middle mt-10 mr-10"></span>
-      <input type="text" class="form-control form-control-lg border-0 bg-transparent text-dark" name="search" id="search" placeholder="Search here...">
-      <button type="button" class="btn btn-sm btn-dark ml-100" onclick="userQuery(1,event)">Search</button>
-    </div>
-  </div>
+   
 </div>
 <section class="mt-50 mb-50">
   
@@ -164,50 +159,7 @@
     })
   }
 
-  function userQuery(pageNumber = 1) {
-  event.preventDefault();
-  $.ajax({
-    url: '/shop',
-    method: 'GET',
-    data: $('#formId').serialize() + '&page=' + pageNumber,
-    success: function(response) {
-      if (response) {
-        var $response = $(response);
-        var $newProductGrid = $response.find('.product-grid-3');
-
-        $('.product-grid-3').replaceWith($newProductGrid);
-        let element = document.getElementById(`current-page-${pageNumber}`);
-        $('#current-page-1').removeClass('active');
-        $(`#current-page-${pageNumber}`).addClass('active');
-        const status = document.getElementById('search-status').value;
-        if (status == 'true') {
-          Swal.fire({
-            icon: 'info',
-            title: 'Info',
-            text: 'Searched Products do not exist, Sorry!!',
-            timer: 3000
-          }).then(() => {
-            location.reload();
-          });
-        }
-      }
-    },
-    error: function(error) {
-      console.log(error);
-    }
-  });
-}
-
-$(document).on('click', '.pagination .page-link', function(e) {
-  e.preventDefault();
-  let pageNumber = $(this).data('page');
-  userQuery(pageNumber);
-});
-
-$(document).on('click', '#searchBtn', function(e) {
-  e.preventDefault();
-  userQuery();
-});
+ 
 
   </script>
 
