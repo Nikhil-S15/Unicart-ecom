@@ -116,8 +116,8 @@ var phone = Number(req.body.phonenumber)
             const { product, totalPages } = await userHelper.getAllProducts(page, perPage);
             if (product?.length != 0)
                 req.session.noProductFound = false
-               console.log(product);
-            res.render('user/shop', {  product, user, count,  totalPages, currentPage, productResult: req.session.noProduct })
+                console.log(product);
+            res.render('user/shop', { layout: 'layout', product, user, count,  totalPages, currentPage, productResult: req.session.noProduct })
             req.session.noProductFound = false
         }
 
