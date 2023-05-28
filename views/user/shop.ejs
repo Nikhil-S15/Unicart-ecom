@@ -1,98 +1,99 @@
-<!-- 
-<div class="dropdown mr-10"  >
-  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"   aria-expanded="false">
-    ALL PRODUCTS
-  </button>
-  <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/products-men">MEN</a></li>
-    <li><a class="dropdown-item" href="/products-women">WOMEN</a></li>
-  
-  </ul>
-</div> -->
 <section class="mt-50 mb-50">
-  
-    <div class="container">
-      
-      <div class="row">
-        <header class="card-header bg-light bg-gradient rounded-3 mb-4 mx-auto" style="padding: 0.25rem;">
-          <form id="formId" class="row gx-3 align-items-center">
-            <div class="col-md-6">
-              <div class="input-group">
-                <span class="d-inline-block text-dark align-middle mt-10 mr-10"></span>
-                <input type="text" class="form-control form-control-lg border-0 bg-transparent text-dark" name="search" id="search" placeholder="Search here...">
-                <button type="button" class="btn btn-sm btn-dark ml-100" onclick="userQuery(1,event)">Search</button>
-              </div>
+  <div class="container">
+    <div class="row justify-content-center">
+
+
+      <header class="card-header bg-light bg-gradient rounded-3 mb-4 mx-auto" style="padding: 0.25rem;">
+        <form id="formId" class="row gx-3 align-items-center">
+          <div class="col-md-6">
+            <div class="input-group">
+              <span class="d-inline-block text-dark align-middle mt-10 mr-10"></span>
+              <input type="text" class="form-control form-control-lg border-0 bg-transparent text-dark" name="search" id="search" placeholder="Search here...">
+              <button type="button" class="btn btn-sm btn-dark ml-100" onclick="userQuery(1,event)">Search</button>
             </div>
-            <div class="col-md-3">
-              <div class="input-group">
-                <span class="d-inline-block text-dark align-middle mt-10 mr-10 ml-100"></span>
-               
-              </div>
+          </div>
+          <div class="col-md-3">
+            <div class="input-group">
+              <span class="d-inline-block text-dark align-middle mt-10 mr-10 ml-100"></span>
+              <select name="sort" id="sort" class="form-select align-middle">
+                <option value="">Sort:</option>
+                <option value="-createdAt">Newest</option>
+                <option value="createdAt">Oldest</option>
+                <option value="-price">Price high to low</option>
+                <option value="price">Price low to high</option>
+              </select>
             </div>
-            <div class="col-md-3">
-              <div class="input-group">
-                <span class="d-inline-block text-dark align-middle mt-10 mr-10 ml-100"></span>
-                <select name="filter" id="filter" class="form-select align-middle">
-                  <option value="">Filter:</option>
-                  <option value="category=Men">Men</option>
-                  <option value="category=Women">Women</option>
-                  <!-- <option value="category=Kids">Kids</option> -->
-                </select>
-              </div>
+          </div>
+          <div class="col-md-3">
+            <div class="input-group">
+              <span class="d-inline-block text-dark align-middle mt-10 mr-10 ml-100"></span>
+              <select name="filter" id="filter" class="form-select align-middle">
+                <option value="">Filter:</option>
+                <option value="category=Men">Men</option>
+                <option value="category=Women">Women</option>
+                <option value="category=Kids">Kids</option>
+              </select>
             </div>
-          </form>
-        </header>
-        <div class="col-lg-12">
-          <div class="row product-grid-3">
-            <% if (!productResult) { %>
-            <% product.forEach(function(item) { %>
-            <div class="col-lg-3 col-md-4">
-            
-                
-                
-              <div class="product-cart-wrap mb-30">
-                <div class="product-img-action-wrap">
-                  <div class="product-img product-img-zoom">
-            
-                    <a href="/product-detail?id=<%= item._id%>">
-                      <img class="default-img" src="/uploads/<%= item.img[0]%>" alt="">
-                      <!-- <img class="hover-img" src="assets/imgs/shop/product-2-2.jpg" alt=""> -->
-                    </a>
-                  </div>
-                  <div class="product-action-1">
-                    <a aria-label="Quick view" class="action-btn hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal">
-                      <i class="fi-rs-search"></i></a>
-                    <a aria-label="Add To Wishlist" class="action-btn hover-up" href="#" onclick="addToWishList('<%=item._id%>')"><i id="wishlist-icon" class="fi-rs-heart"></i></a>
-                    <a aria-label="Compare" class="action-btn hover-up" href="#"><i class="fi-rs-shuffle"></i></a>
-                  </div>
-                  <!-- <div class="product-badges product-badges-position product-badges-mrg">
-                    <span class="hot">Hot</span>
-                  </div> -->
+          </div>
+        </form>
+      </header>
+
+
+      <div class="col-md-10 text-right">
+        <div class="row product-grid-3">
+          <% if (!productResult) { %>
+          <% product.forEach(function(item) { %>
+          <div class="col-lg-4 col-md-4">
+            <div class="product-cart-wrap mb-30">
+              <div class="product-img-action-wrap">
+                <div class="product-img product-img-zoom">
+                  <a href="/product-detail/<%= item._id%>">
+                    <img class="default-img" src="/uploads/<%= item.img[0]%>" alt="">
+                  </a>
                 </div>
-                <div class="product-content-wrap">
-                  <h2><a href="#"><%= item.name %></a></h2>
-                  <div class="rating-result" title="90%"></div>
-                  <div class="product-price">
-                    <% if (item.discountedPrice > 0) { %>
-                    <span class="discounted-price">₹<%= item.discountedPrice %></span>
-                    <small class="text-muted" style="text-decoration: line-through; margin-left: 10px;">₹<%= item.price %></small>
-                    <% } else { %>
-                    <span>₹<%= item.price %></span>
-                    <% } %>
-                  </div>
-                  <div class="product-action-1 show">
-                    <button aria-label="Add To Cart" class="action-btn hover-up" onclick="addtocart('<%= item._id%>')" ><i class="fi-rs-shopping-bag-add"></i></button>
-                  </div>
+                <div class="product-action-1">
+                  <a aria-label="Quick view" class="action-btn hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal">
+                    <i class="fi-rs-search"></i>
+                  </a>
+                  <a aria-label="Add To Wishlist" class="action-btn hover-up" href="#" onclick="addToWishList('<%=item._id%>')">
+                    <i id="wishlist-icon" class="fi-rs-heart"></i>
+                  </a>
+                  <a aria-label="Compare" class="action-btn hover-up" href="#">
+                    <i class="fi-rs-shuffle"></i>
+                  </a>
                 </div>
               </div>
+              <div class="product-content-wrap">
+                <h2><a href="#"><%= item.name %></a></h2>
+                <div class="rating-result" title="90%"></div>
+                <div class="product-price">
+                  <% if (item.discountedPrice > 0) { %>
+                  <span class="discounted-price">₹<%= item.discountedPrice %></span>
+                  <small class="text-muted" style="text-decoration: line-through; margin-left: 10px;">₹<%= item.price %></small>
+                  <% } else { %>
+                  <span>₹<%= item.price %></span>
+                  <% } %>
+                </div>
+
+                <div class="product-action-1 show">
+                  <a aria-label="Add To Cart" class="action-btn hover-up" href="#" onclick="addToCart('<%=item.id%>')">
+                    <i class="fi-rs-shopping-bag-add"></i>
+                  </a>
+                </div>
+              </div>
             </div>
-            <input type="hidden" value="<%=productResult%>" id="search-status">
-            <% }); %>
-            <% } else { %>
-            <input type="hidden" value="<%=productResult%>" id="search-status">
-            <% } %>
-  
-           <!--pagination-->
+          </div>
+          <input type="hidden" value="<%=productResult%>" id="search-status">
+          <% }); %>
+          <% } else { %>
+          <input type="hidden" value="<%=productResult%>" id="search-status">
+          <% } %>
+
+
+
+
+
+          <!--pagination-->
           <div class="pagination-area mt-15 mb-sm-5 mb-lg-0">
             <nav aria-label="Page navigation example">
               <ul class="pagination justify-content-start">
@@ -121,42 +122,40 @@
               </ul>
             </nav>
           </div>
-          </div>
+
         </div>
       </div>
-  </section>
+    </div>
+</section>
 
-  <script>
-    function addtocart (proId) {
-      $.ajax({
-        url:'/add-to-cart/'+proId,
-        method:'POST',
-      
-        success:(response)=>{
+
+
+<script>
+  // add to cart ajax call
+  function addToCart(proId) {
+    $.ajax({
+      url: '/add-to-cart/' + proId,
+      method: 'POST',
+      data: {
+        proId: proId
+      },
+      success: (response) => {
+        if (response.status) {
+          location.reload()
+        } else if (response.error) {
           Swal.fire({
-            title: 'Added To Cart',
-            text: 'Your Product has been added to Cart',
-            icon: 'success',
-            timer: 5000
-          })
-          if (response.error) {
-            console.log(response.error,"ooollll");
-          Swal.fire({
-            
             icon: 'warning',
             title: response.message,
             showConfirmButton: false,
-            timer: 3000
-          }).then(() => {
-            location.reload()
-
+            timer: 4000
           })
-        }
-        }
-      })
-    }
 
-    //add to wish list ajax call
+        }
+      }
+    })
+  }
+
+  //add to wish list ajax call
   function addToWishList(proId) {
     $.ajax({
       url: '/add-to-wishlist',
@@ -245,5 +244,4 @@
     e.preventDefault();
     userQuery();
   });
-  </script>
-
+</script>
