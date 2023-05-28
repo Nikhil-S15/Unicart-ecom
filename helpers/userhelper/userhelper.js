@@ -98,23 +98,23 @@ module.exports = {
     res.redirect('/login')
 },
   // shop page
-  getShop: () => {
-   return new Promise(async (resolve, reject) => {
-      try {
-        console.log("fun is here");
-        await DB.Product.find().then((product) => {
-          if (product) {
-            console.log("hi police ");
-            resolve(product);
-          } else {
-            console.log("product not found");
-          }
-        });
-      } catch (error) {
-        throw error;
-      }
-    });
-  }, 
+  // getShop: () => {
+  //  return new Promise(async (resolve, reject) => {
+  //     try {
+  //       console.log("fun is here");
+  //       await DB.Product.find().then((product) => {
+  //         if (product) {
+  //           console.log("hi police ");
+  //           resolve(product);
+  //         } else {
+  //           console.log("product not found");
+  //         }
+  //       });
+  //     } catch (error) {
+  //       throw error;
+  //     }
+  //   });
+  // }, 
   getUser: (userId) => {
     try {
         return new Promise((resolve, reject) => {
@@ -205,6 +205,7 @@ getAllProductsWomen:()=>
 
   /* GET Shop Page. */
   getAllProducts: async (page, perPage) => {
+    console.log("fun is here");
     const skip = (page - 1) * perPage;
     const product = await productModel.Product.find()
         .skip(skip)
@@ -214,6 +215,7 @@ getAllProductsWomen:()=>
     const totalPages = Math.ceil(totalProducts / perPage);
 
     return {
+   
         product,
         totalPages,
     };
